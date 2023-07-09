@@ -3,7 +3,7 @@ import time
 motionPin=12
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(motionPin, GPIO.IN)
-time.sleep(11)
+time.sleep(12)
 try:
     while True:
         motion=GPIO.input(motionPin)
