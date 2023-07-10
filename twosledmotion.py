@@ -15,3 +15,5 @@ def turn_off_leds():
 
 pir.when_motion = turn_on_leds
 pir.when_no_motion = turn_off_leds
+
+pause()
