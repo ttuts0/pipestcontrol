@@ -8,18 +8,20 @@ red = LED(16)
 white = LED(17)
 green = LED(27)
 log = 'motionTimeLog.txt'
-is_pest=''
+is_pest=True
+
 
 def pest_or_friend():
     is_pest = random.choice(True, False)
-    return is_pest
 
 def motion_detected():#turn on red
     if is_pest:
         red.on()
+        print("pest detected")
     else:
         green.on()
-    motion_log()
+        print("friend detected")
+    motion_log(is_pest)
     white.off()
 
 def no_motion():#TURN OFF
