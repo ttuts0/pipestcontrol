@@ -2,19 +2,18 @@ from gpiozero import MotionSensor, LED
 from datetime import datetime
 from signal import pause
 import random
+import time
 
 pir = MotionSensor(4)#gpio4
 red = LED(16)
 white = LED(17)
 green = LED(27)
 log = 'motionTimeLog.txt'
-is_pest=True
 
-
-def pest_or_friend():
-    is_pest = random.choice(True, False)
 
 def motion_detected():#turn on red
+    is_pest = pest_or_friend()    
+    print(is_pest)
     if is_pest:
         red.on()
         print("pest detected")
@@ -23,7 +22,11 @@ def motion_detected():#turn on red
         print("friend detected")
     motion_log(is_pest)
     white.off()
+    
 
+def pest_or_friend():
+    return random.choice([True, False])
+    
 def no_motion():#TURN OFF
     red.off()
     green.off()
@@ -32,7 +35,11 @@ def no_motion():#TURN OFF
 def motion_log(is_pest: bool):
     timestamp = datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
     file=open(log, 'a')
-    file.write(f'Motion detected at : {timestamp}\n')
+    if is_pest:
+        file.write('pest ')
+    else:
+        file.write('friend ')        
+    file.write(f'detected at : {timestamp}\n')
     file.close()
 
 pir.when_motion = motion_detected 
