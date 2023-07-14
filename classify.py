@@ -35,7 +35,7 @@ def search_for_pest():
     # Fetch image & preprocess it to match the input requirements of the model
     # file_path = "sample_pictures/10.jpg"
     #file_path = "sample_pictures/11.jpg"
-    number = random.randint(9,12)
+    number = random.randint(9,20)
     file_path ='sample_pictures/'+f'{number}.jpg'
     #random.choice(["sample_pictures/12.jpg", "sample_pictures/9.jpg"])
     print(file_path)
@@ -78,7 +78,7 @@ def search_for_pest():
         score=predictions[top_k_indices[i]]/255.0
         lbl=labels[top_k_indices[i]]
         print(lbl, "=", score)
-        if lbl in ['tabby', 'egyptian cat','tiger cat', 'lynx']:
+        if lbl in ['tabby', 'egyptian cat','tiger cat', 'lynx', 'Mexican hairless', 'Siamese cat']:
             return True
 
     top_label = labels[top_k_indices[0]]
@@ -90,4 +90,3 @@ def search_for_pest():
 
     
     
-search_for_pest()
