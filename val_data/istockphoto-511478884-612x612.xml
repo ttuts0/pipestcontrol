@@ -1,0 +1,26 @@
+<annotation>
+	<folder>val_data</folder>
+	<filename>istockphoto-511478884-612x612.jpg</filename>
+	<path>C:\Users\tammy\Desktop\pipestcontrol\labelimg\pics\val_data\istockphoto-511478884-612x612.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>612</width>
+		<height>612</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>snail</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>34</xmin>
+			<ymin>43</ymin>
+			<xmax>561</xmax>
+			<ymax>570</ymax>
+		</bndbox>
+	</object>
+</annotation>

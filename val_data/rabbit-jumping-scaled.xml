@@ -1,0 +1,26 @@
+<annotation>
+	<folder>val_data</folder>
+	<filename>rabbit-jumping-scaled.jpg</filename>
+	<path>C:\Users\tammy\Desktop\pipestcontrol\labelimg\pics\val_data\rabbit-jumping-scaled.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2560</width>
+		<height>1538</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>rabbit</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>434</xmin>
+			<ymin>135</ymin>
+			<xmax>2224</xmax>
+			<ymax>1334</ymax>
+		</bndbox>
+	</object>
+</annotation>
