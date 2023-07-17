@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train_data</folder>
+	<filename>bf8b6bdd-c320-4f88-8da9-30920e931b97-July_7_Giant_African_land_Snail_Stock_Adobe.jpg</filename>
+	<path>C:\Users\tammy\Desktop\pipestcontrol\labelimg\pics\train_data\bf8b6bdd-c320-4f88-8da9-30920e931b97-July_7_Giant_African_land_Snail_Stock_Adobe.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>3200</width>
+		<height>1801</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>snail</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>85</xmin>
+			<ymin>171</ymin>
+			<xmax>2726</xmax>
+			<ymax>1556</ymax>
+		</bndbox>
+	</object>
+</annotation>
