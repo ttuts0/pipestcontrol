@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train_data</folder>
+	<filename>National-Snail-Day.jpg.jpg</filename>
+	<path>C:\Users\tammy\Desktop\pipestcontrol\labelimg\pics\train_data\National-Snail-Day.jpg.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1200</width>
+		<height>1200</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>snail</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>301</xmin>
+			<ymin>413</ymin>
+			<xmax>933</xmax>
+			<ymax>816</ymax>
+		</bndbox>
+	</object>
+</annotation>
