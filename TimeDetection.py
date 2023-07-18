@@ -43,6 +43,7 @@ def motion_log(is_pest: bool):
     file.write(f'detected at : {timestamp}\n')
     file.close()
 
+
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion
 

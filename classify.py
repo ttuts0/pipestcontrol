@@ -4,7 +4,7 @@ import numpy as np#array operations
 from PIL import Image#mkae inputted image compatible w ML
 import time
 import random
-
+pest_log = 'pests.txt'
 def search_for_pest():
     model_path = "model_files/mobilenet_v1_1.0_224_quant.tflite" #img classification model
     label_path = "model_files/labels.txt"#labels of imgs in classified model
@@ -73,12 +73,17 @@ def search_for_pest():
     top_k = 5
     top_k_indices = np.argsort(predictions)[::-1][0:top_k]
     #print("Sorted array of top indices:",top_k_indices)
+    
+    pest_list=[]
+    def check_pest():
+        with open(pest_log,'r') as file:
+            pest_list=file.readlines()
 
     for i in range(top_k):
         score=predictions[top_k_indices[i]]/255.0
         lbl=labels[top_k_indices[i]]
         print(lbl, "=", score)
-        if lbl in ['tabby', 'egyptian cat','tiger cat', 'lynx', 'Mexican hairless', 'Siamese cat']:
+        if lbl in pest_list:
             return True
 
     top_label = labels[top_k_indices[0]]
