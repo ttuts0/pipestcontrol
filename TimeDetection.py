@@ -3,17 +3,17 @@ from datetime import datetime
 from signal import pause
 import random
 import time
-import classify
+import classify2
 
 pir = MotionSensor(4)#gpio4
 red = LED(16)
 white = LED(17)
 green = LED(27)
-log = 'motionTimeLog.txt'
+log = 'motionTimeLog.txt'              
 
 
 def motion_detected():#turn on red
-    is_pest = classify.search_for_pest()
+    is_pest = classify2.search_for_pest()
     print(is_pest)
     if is_pest:
         red.on()  
