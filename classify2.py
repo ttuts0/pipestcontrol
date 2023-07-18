@@ -75,20 +75,15 @@ def search_for_pest():
     #print("Sorted array of top indices:",top_k_indices)
     
     pest_list=[]
-    def check_pest():
-        with open(pest_log,'r') as file:
-            pest_list=[line.strip() for line in file.readlines()]
-            return pest_list
-    a = check_pest()
-    print(a)
-
+    with open(pest_log,'r') as file:
+        pest_list=[line.strip() for line in file.readlines()]
 
     for i in range(top_k):
         score=predictions[top_k_indices[i]]/255.0
         lbl=labels[top_k_indices[i]]
         print(lbl, "=", score)
         for f in pest_list:
-            if lbl.lower() in pest_list[f]:
+            if lbl.lower() in f.lower():
                 return True
 
     top_label = labels[top_k_indices[0]]
