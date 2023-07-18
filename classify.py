@@ -36,7 +36,7 @@ def search_for_pest():
     # file_path = "sample_pictures/10.jpg"
     #file_path = "sample_pictures/11.jpg"
     number = random.randint(9,20)
-    file_path ='sample_pictures/'+f'{number}.jpg'
+    file_path =f'sample_pictures/{number}.jpg'
     #random.choice(["sample_pictures/12.jpg", "sample_pictures/9.jpg"])
     print(file_path)
 
@@ -78,8 +78,10 @@ def search_for_pest():
         score=predictions[top_k_indices[i]]/255.0
         lbl=labels[top_k_indices[i]]
         print(lbl, "=", score)
-        if lbl in ['tabby', 'egyptian cat','tiger cat', 'lynx', 'Mexican hairless', 'Siamese cat']:
+        if lbl.lower() in ['tabby', 'egyptian cat','tiger cat', 'lynx', 'mexican hairless', 'siamese cat']:
+            print('found cat')
             return True
+    
 
     top_label = labels[top_k_indices[0]]
     index_max_score=top_k_indices[0]
@@ -87,6 +89,8 @@ def search_for_pest():
     max_label=labels[index_max_score]
 
     print(max_label,": ",max_score)
-
+    print("couldn't fibd cat")
+    return False
+search_for_pest()
     
     
