@@ -3,10 +3,11 @@ import numpy as np#array operations
 from PIL import Image#mkae inputted image compatible w ML
 import time
 import random
-pest_log = 'pests.txt'
+
 def search_for_pest():
     model_path = "model_files/mobilenet_v1_1.0_224_quant.tflite" #img classification model
     label_path = "model_files/labels.txt"#labels of imgs in classified model
+    pest_log = 'pests.txt'
 
     interpreter = Interpreter(model_path=model_path)
 
@@ -76,14 +77,19 @@ def search_for_pest():
     pest_list=[]
     def check_pest():
         with open(pest_log,'r') as file:
-            pest_list=file.readlines()
+            pest_list=[line.strip() for line in file.readlines()]
+            return pest_list
+    a = check_pest()
+    print(a)
+
 
     for i in range(top_k):
         score=predictions[top_k_indices[i]]/255.0
         lbl=labels[top_k_indices[i]]
         print(lbl, "=", score)
-        if lbl in pest_list:
-            return True
+        for f in pest_list:
+            if lbl.lower() in pest_list[f]:
+                return True
 
     top_label = labels[top_k_indices[0]]
     index_max_score=top_k_indices[0]
@@ -91,6 +97,4 @@ def search_for_pest():
     max_label=labels[index_max_score]
 
     print(max_label,": ",max_score)
-
-    
-    
+    return False
