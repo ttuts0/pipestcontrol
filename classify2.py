@@ -38,7 +38,7 @@ def search_for_pest():
     number = random.randint(9,20)
     file_path ='sample_pictures/'+f'{number}.jpg'
     #random.choice(["sample_pictures/12.jpg", "sample_pictures/9.jpg"])
-    print(file_path)
+    #print(file_path)
 
     img = Image.open(file_path).convert('RGB') #read the image and convert it to RGB format
     img = img.resize(size) #resize the image to 224x224
@@ -65,10 +65,10 @@ def search_for_pest():
     predictions = interpreter.get_tensor(output_details[0]['index'])[0]
 
     #print("length of array: ", len(predictions),"n")
-
-    for i in range(len(predictions)):
-        if(predictions[i]>0):
-            print("predictions["+str(i)+"]: ",predictions[i])
+# 
+#     for i in range(len(predictions)):
+#         if(predictions[i]>0):
+#             print("predictions["+str(i)+"]: ",predictions[i])
 
     top_k = 5
     top_k_indices = np.argsort(predictions)[::-1][0:top_k]
@@ -81,7 +81,7 @@ def search_for_pest():
     for i in range(top_k):
         score=predictions[top_k_indices[i]]/255.0
         lbl=labels[top_k_indices[i]]
-        print(lbl, "=", score)
+        #print(lbl, "=", score)
         for f in pest_list:
             if lbl.lower() in f.lower():
                 return True
@@ -91,5 +91,5 @@ def search_for_pest():
     max_score=score=predictions[index_max_score]/255.0
     max_label=labels[index_max_score]
 
-    print(max_label,": ",max_score)
+    #print(max_label,": ",max_score)
     return False
