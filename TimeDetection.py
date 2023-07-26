@@ -17,7 +17,6 @@ log = 'motionTimeLog.txt'
 client = publisher.create_client()
 #client.publish('pestbusterai/motion', payload='hello', qos=0, retain=False)
 client.publish('pestbusterai/general', payload='connected', qos=0, retain=False)
-clienttwo = subscriber.create_clienttwo()
 
 def motion_detected():#turn on red
     is_pest = classify2.search_for_pest()
@@ -56,15 +55,10 @@ def detected_motion(is_pest):
     timestamp = datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
     if is_pest:
         client.publish('pestbusterai/motion', payload='pest '+f'detected at : {timestamp}\n', qos=0, retain=False)
-        client.publish('pestbusterai/flask', payload='pest '+f'detected at : {timestamp}\n', qos=0, retain=False)
 
     else:
         client.publish('pestbusterai/motion', payload='friend '+f'detected at : {timestamp}\n', qos=0, retain=False)
-        client.publish('pestbusterai/flask', payload='friend '+f'detected at : {timestamp}\n', qos=0, retain=False)
-    detected_motionflask()
 
-def detected_motionflask():
-    client.subscribe('pestbusterai/motion')
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion
 
