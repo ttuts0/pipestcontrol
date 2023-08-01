@@ -23,10 +23,8 @@ def motion_detected():#turn on red
    
     if is_pest:
         red.on()  
-        print("pest detected")
     else:
         green.on()
-        print("friend detected")
     motion_log(is_pest)
     detected_motion(is_pest)
     
@@ -48,16 +46,17 @@ def motion_log(is_pest: bool):
         file.write('pest ')
     else:
         file.write('friend ')        
-    file.write(f'detected at : {timestamp}\n')
+    file.write(f'{timestamp}')
     file.close()
-    
+
+
 def detected_motion(is_pest):
     timestamp = datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
     if is_pest:
-        client.publish('pestbusterai/motion', payload='pest '+f'detected at : {timestamp}\n', qos=0, retain=False)
+        client.publish('pestbusterai/motion', payload='pest ,'+f'{timestamp}', qos=0, retain=False)
 
     else:
-        client.publish('pestbusterai/motion', payload='friend '+f'detected at : {timestamp}\n', qos=0, retain=False)
+        client.publish('pestbusterai/motion', payload='friend ,'+f'{timestamp}', qos=0, retain=False)
 
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion

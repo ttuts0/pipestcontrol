@@ -25,14 +25,24 @@ def get_last_three_lines(file_path):
         lines = file.readlines()
     return lines[-3:]
 
+def get_rest_of_lines(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    return lines[:-3]
 
 @app.route('/')
 def stream_file():
     file_path = 'motion_log.txt'
     last_three_lines = get_last_three_lines(file_path)
-    
+    #formatted_lines = format_lines(last_three_lines)
     return render_template('index.html', lines=last_three_lines)
 
+@app.route('/full_log')
+def show_full_log():
+    file_path = 'motion_log.txt'
+    rest_of_lines = get_rest_of_lines(file_path)
+    #formatted_lines = format_lines(rest_of_lines)
+    return render_template('show_more.html', lines=rest_of_lines)
 #HELLO_HTML = """
  #   <html><body>
   #      <h1>{0}</h1>

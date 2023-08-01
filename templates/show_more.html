@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pest Log</title>
+    <title>Full Log</title>
 </head>
 <body>
-    <h1>Pest Log</h1>
+    <h1>Full Log</h1>
     <ul>
         {% for line in lines %}
-        <li>{{ line.strip() }}</li>
+            <li>{{ line }}</li>
         {% endfor %}
     </ul>
-    <a href="full_log"> show more </a>
 </body>
 </html>
