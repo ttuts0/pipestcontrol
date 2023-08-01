@@ -4,11 +4,21 @@
     <title>Pest Log</title>
 </head>
 <body>
-    <h1>Pest Log</h1>
-    <ul>
-        {% for line in lines %}
-        <li>{{ line.strip() }}</li>
-        {% endfor %}
+    {% extends "base.html" %}
+    
+    {% block content %}
+        <br>
+        <br>
+        <br>
+        <h1>Pest Log</h1>
+        <ul>
+            {% for line in lines %}
+            <li>{{ line.strip() }}</li>
+            {% endfor %}
+        </ul>
+        <a href="full_log"> show more </a>
+    {% endblock %}
+    
     </ul>
     <a href="full_log"> show more </a>
 </body>

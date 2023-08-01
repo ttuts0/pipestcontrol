@@ -4,11 +4,17 @@
     <title>Full Log</title>
 </head>
 <body>
+    <br>
+    <br>
+    <br>
+    {% extends "base.html" %}
+    {% block content %}
     <h1>Full Log</h1>
     <ul>
         {% for line in lines %}
             <li>{{ line }}</li>
         {% endfor %}
+        {% endblock %}
     </ul>
 </body>
 </html>
