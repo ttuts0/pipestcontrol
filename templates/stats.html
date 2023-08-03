@@ -1,5 +1,7 @@
 <html>
 <head>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <title>Motion Detection Log</title>
     <style>
         table {
@@ -13,7 +15,16 @@
             text-align: center;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #901f1f;
+        }
+        h1{
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+        }
+        .myDiv {
+            width: 100%;
         }
     </style>
 </head>
@@ -23,6 +34,10 @@
     <br>
     {% extends "base.html" %}
     {% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
     <h1>Motion Detection Log</h1>
     <table>
         <tr>
@@ -30,175 +45,44 @@
             <th>Pest Count</th>
             <th>Friend Count</th>
         </tr>
-        <tr>
-            <td>0</td>
-            <td>{{ motion_data[0]['pest'] }}</td>
-            <td>{{ motion_data[0]['friend'] }}</td>
-            
-
+    <table>
         </tr>
+        {% for hour in motion_data %}
         <tr>
-            <td>1</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
+            <td>{{ loop.index0}}</td>
+            <td>{{ motion_data[hour]['pest'] }}</td>
+            <td>{{ motion_data[hour]['friend'] }}</td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>9</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-
-        </tr>
-        <tr>
-            <td>11</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>12</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>13</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>14</td>
-            <td>{{ motion_data[14]['pest'] }}</td>
-            <td>{{ motion_data[14]['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>15</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>16</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>17</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>18</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>19</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>20</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>21</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>22</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-        <tr>
-            <td>23</td>
-            <td>{{ motion_data['pest'] }}</td>
-            <td>{{ motion_data['friend'] }}</td>
-            
-
-        </tr>
-    
+        {% endfor %}
+        
     </table>
+    <div class="myDiv" id="myDiv">
+    </div>
+
     {% endblock %}
 
+    <script>
+    var trace1 = {
+    x: ['giraffes', 'orangutans', 'monkeys'],
+    y: [20, 14, 23],
+    name: 'SF Zoo',
+    type: 'bar'
+    };
+
+    var trace2 = {
+    x: ['giraffes', 'orangutans', 'monkeys'],
+    y: [12, 18, 29],
+    name: 'LA Zoo',
+    type: 'bar'
+    };
+
+    var data = [trace1, trace2];
+
+    var layout = {barmode: 'group'};
+
+    Plotly.newPlot('myDiv', data, layout);
+    </script>
+
 </body>
+
 </html>

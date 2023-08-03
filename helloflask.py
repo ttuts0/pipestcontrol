@@ -64,6 +64,7 @@ def stats():
     motion_data = get_motion_data_from_file(file_path)
     motion_data_copy = dict(motion_data) 
     return render_template('stats.html', motion_data=motion_data)
+
 #HELLO_HTML = """
  #   <html><body>
   #      <h1>{0}</h1>
