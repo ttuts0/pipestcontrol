@@ -52,27 +52,16 @@ def motion_log(is_pest: bool):
     file.write(f'{timestamp}')
     file.close()
 
-def get_motion_data_from_file(file_path):
-    motion_data = {}
-    with open(file_path, 'r') as file:
-        for line in file:
-            if 'detected at :' in line:
-                parts = line.strip().split(' ')
-                if len(parts) >= 6:
-                    timestamp = parts[-2] + ' ' + parts[-1]
-                    hour = timestamp.split(':')[0]
-                    motion_data[hour] = motion_data.get(hour, 0) + 1
-    return motion_data
 
 def detected_motion(is_pest):
     timestamp = datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
     if is_pest:
-        client.publish('pestbusterai/motion', payload='pest,'+f'{timestamp}', qos=0, retain=False)
+        client.publish('pestbusterai/motion', payload='pest ,'+f'{timestamp}', qos=0, retain=False)
 
     else:
-        client.publish('pestbusterai/motion', payload='friend,'+f'{timestamp}', qos=0, retain=False)
+        client.publish('pestbusterai/motion', payload='friend ,'+f'{timestamp}', qos=0, retain=False)
 
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion
 
-pause()                                                                                                          
+pause()                                                                                                                                                                    
