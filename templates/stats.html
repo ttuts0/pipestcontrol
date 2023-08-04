@@ -1,88 +1,104 @@
-<html>
-<head>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <title>Motion Detection Log</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #901f1f;
-        }
-        h1{
-            text-align: center;
-            padding-top: 20px;
-            padding-bottom: 20px;
 
-        }
+{% extends "base.html" %}
+{% block content %}
+<h1>Motion Detection Log</h1>
+
+    <style>
+       
         .myDiv {
-            width: 100%;
+            padding-top: 50px;
+            width: 80%;
+            margin: auto;
+        }
+
+        .PieChart{
+            width: 80%;
+            margin: auto;
         }
     </style>
-</head>
-<body>
-    <br>
-    <br>
-    <br>
-    {% extends "base.html" %}
-    {% block content %}
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>Motion Detection Log</h1>
-    <table>
-        <tr>
-            <th>Time (Hour)</th>
-            <th>Pest Count</th>
-            <th>Friend Count</th>
-        </tr>
-    <table>
-        </tr>
-        {% for hour in motion_data %}
-        <tr>
-            <td>{{ loop.index0}}</td>
-            <td>{{ motion_data[hour]['pest'] }}</td>
-            <td>{{ motion_data[hour]['friend'] }}</td>
-        </tr>
-        {% endfor %}
-        
-    </table>
+
+
+
     <div class="myDiv" id="myDiv">
     </div>
 
-    {% endblock %}
+    <div class="PieChart" id="PieChart">
+    </div>
+
 
     <script>
+    const x_labels = [];
+    const pest_data=[];
+    const friend_data=[];
+    for(let i =0; i<24; i++){
+        x_labels.push(i);
+        
+    }
+    {% for hour in motion_data %}
+
+            pest_data.push({{ motion_data[hour]['pest'] }});
+            friend_data.push({{ motion_data[hour]['friend'] }});
+    
+    {% endfor %}
     var trace1 = {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [20, 14, 23],
-    name: 'SF Zoo',
+    //x: ['giraffes', 'orangutans', 'monkeys'],
+    x: x_labels,
+    y: pest_data,
+    name: 'Pests',
     type: 'bar'
     };
 
     var trace2 = {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [12, 18, 29],
-    name: 'LA Zoo',
+    x: x_labels,
+    y: friend_data,
+    name: 'Friends',
     type: 'bar'
     };
 
     var data = [trace1, trace2];
 
-    var layout = {barmode: 'group'};
-
+    var layout = {
+        title: 'Pest and Friend Count by Hour', 
+        xaxis: {
+            title: 'Hour', 
+        },
+        yaxis: {
+            title: 'Count', 
+        },
+        barmode: 'group'
+    };
     Plotly.newPlot('myDiv', data, layout);
+
+    //PieChart
+   const pest_data_total=[]
+   const friend_data_total=[]
+   var total=0;
+   var total2=0;
+    for(let count =0; count<24; count++){
+       total += pest_data[count] 
+       pest_data_total.push(total)
+    }
+
+    for(let count2 =0; count2<24; count2++){
+       total2 += friend_data[count2] 
+       friend_data_total.push(total2)
+    }
+
+    var data = [{
+  values: [pest_data_total, friend_data_total],
+  labels: ['Pest', 'Friend'],
+  type: 'pie'
+}];
+
+var layout = {
+  height: 400,
+  width: 500
+};
+
+Plotly.newPlot('PieChart', data, layout);
+
     </script>
 
-</body>
 
-</html>
+
+{% endblock %}
