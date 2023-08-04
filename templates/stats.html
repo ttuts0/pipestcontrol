@@ -70,32 +70,28 @@
     Plotly.newPlot('myDiv', data, layout);
 
     //PieChart
-   const pest_data_total=[]
-   const friend_data_total=[]
    var total=0;
    var total2=0;
     for(let count =0; count<24; count++){
        total += pest_data[count] 
-       pest_data_total.push(total)
     }
 
     for(let count2 =0; count2<24; count2++){
        total2 += friend_data[count2] 
-       friend_data_total.push(total2)
     }
 
-    var data = [{
-  values: [pest_data_total, friend_data_total],
-  labels: ['Pest', 'Friend'],
+    var data2 = [{
+  values: [total2, total],
+  labels: ['Friend', 'Pest'],
   type: 'pie'
 }];
 
-var layout = {
+var layout2 = {
   height: 400,
   width: 500
 };
 
-Plotly.newPlot('PieChart', data, layout);
+Plotly.newPlot('PieChart', data2, layout2);
 
     </script>
 
