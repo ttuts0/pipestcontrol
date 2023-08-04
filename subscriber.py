@@ -11,7 +11,6 @@ def print_msg(client, userdata, msg):#function will be called when the MQTT clie
     f=open("motion_log.txt", "a")
     message = msg.payload.decode('utf-8')
     f.write(message+'\n')
-    print(message)
     f.close()
 
 client = mqtt.Client()
