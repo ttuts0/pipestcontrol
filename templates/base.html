@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <!-- Add necessary meta tags, CSS, and other header elements here -->
     <style>
         #main_header {
@@ -16,14 +18,43 @@
             font-size: 50px;
             font-weight: bold; 
         }
+
+        nav{
+            font-size: 25px;
+            padding-top: 45px;
+            position: fixed;
+            width: 100%
+    
+
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+}
+        a{
+            width: 33.33%;    
+            text-align: center; 
+
+    }
+
+
+
     </style>
 </head>
 <body>
     <header id="main_header">
-        PESTBUSTERAI 
+        PEST BUSTER AI 
     </header>
+    <nav>
+        <ul>
+            <a href="/">Home</a></li>
+            <a href="/full_log">Full Log</a></li>
+            <a href="/stats">Statistics</a></li>
+        </ul>
+    </nav>
     <main>
         {% block content %}{% endblock %}
     </main>
+    
 </body>
 </html>

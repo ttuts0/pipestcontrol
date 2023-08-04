@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
+
+{% extends "base.html" %}
+{% block content %}
     <title>Full Log</title>
-</head>
-<body>
-    <br>
-    <br>
-    <br>
-    {% extends "base.html" %}
-    {% block content %}
+
+  <style>
+h1{
+    padding-top: 110px;
+}
+  </style>
     <h1>Full Log</h1>
     <ul>
         {% for line in lines %}
@@ -16,5 +15,4 @@
         {% endfor %}
         {% endblock %}
     </ul>
-</body>
-</html>
+

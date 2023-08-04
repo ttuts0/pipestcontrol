@@ -1,0 +1,104 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>Motion Detection Log</h1>
+
+    <style>
+       
+        .myDiv {
+            padding-top: 50px;
+            width: 80%;
+            margin: auto;
+        }
+
+        .PieChart{
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+
+
+
+    <div class="myDiv" id="myDiv">
+    </div>
+
+    <div class="PieChart" id="PieChart">
+    </div>
+
+
+    <script>
+    const x_labels = [];
+    const pest_data=[];
+    const friend_data=[];
+    for(let i =0; i<24; i++){
+        x_labels.push(i);
+        
+    }
+    {% for hour in motion_data %}
+
+            pest_data.push({{ motion_data[hour]['pest'] }});
+            friend_data.push({{ motion_data[hour]['friend'] }});
+    
+    {% endfor %}
+    var trace1 = {
+    //x: ['giraffes', 'orangutans', 'monkeys'],
+    x: x_labels,
+    y: pest_data,
+    name: 'Pests',
+    type: 'bar'
+    };
+
+    var trace2 = {
+    x: x_labels,
+    y: friend_data,
+    name: 'Friends',
+    type: 'bar'
+    };
+
+    var data = [trace1, trace2];
+
+    var layout = {
+        title: 'Pest and Friend Count by Hour', 
+        xaxis: {
+            title: 'Hour', 
+        },
+        yaxis: {
+            title: 'Count', 
+        },
+        barmode: 'group'
+    };
+    Plotly.newPlot('myDiv', data, layout);
+
+    //PieChart
+   const pest_data_total=[]
+   const friend_data_total=[]
+   var total=0;
+   var total2=0;
+    for(let count =0; count<24; count++){
+       total += pest_data[count] 
+       pest_data_total.push(total)
+    }
+
+    for(let count2 =0; count2<24; count2++){
+       total2 += friend_data[count2] 
+       friend_data_total.push(total2)
+    }
+
+    var data = [{
+  values: [pest_data_total, friend_data_total],
+  labels: ['Pest', 'Friend'],
+  type: 'pie'
+}];
+
+var layout = {
+  height: 400,
+  width: 500
+};
+
+Plotly.newPlot('PieChart', data, layout);
+
+    </script>
+
+
+
+{% endblock %}
