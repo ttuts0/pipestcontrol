@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
+import base64
 #import TimeDetection
 
 # def on_connect(client, userdata, flags, rc):
@@ -16,3 +17,12 @@ def create_client():#parameter to change broker
     client.connect("broker.emqx.io", 1883, 60)
 
     return client
+
+client= create_client()
+#client.susbcribe('pestbusterai/image')
+with open("dog.jpg","rb") as image:
+    img = image.read()
+message2=img
+base64_bytes=base64.b64encode(message2)
+base64_message=base64_bytes.decode('ascii')
+client.publish('pestbusterai/image', payload = base64_message, qos=0, retain=False)
