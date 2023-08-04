@@ -22,9 +22,12 @@ def motion_detected():#turn on red
     is_pest = classify2.search_for_pest()
    
     if is_pest:
-        red.on()  
+        red.on()
+        print('pest detected')
     else:
         green.on()
+        print('friend detected')
+
     motion_log(is_pest)
     detected_motion(is_pest)
     
@@ -61,4 +64,4 @@ def detected_motion(is_pest):
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion
 
-pause()
+pause()                                                                                                          
