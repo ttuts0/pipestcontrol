@@ -1,6 +1,7 @@
 
 {% extends "base.html" %}
 {% block content %}
+
     <style>
         h1{
             padding-top: 110px;
@@ -9,11 +10,14 @@
       
     <h1>Pest Log</h1>
         <ul>
-            {% for line in lines %}
+            {% for line in motion_lines %}
             <li>{{ line.strip() }}</li>
             {% endfor %}
         </ul>
         <a href="full_log"> show more </a>
-    
+     
 
-{% endblock %}
+        <h2>Received Image:</h2>
+        <img src="{{ url_for('get_image', filename='recive_img.jpg') }}" alt="Received Image">
+
+        {% endblock %}
