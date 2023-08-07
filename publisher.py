@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import time
 import base64
+from classify2 import get_file_path
 #import TimeDetection
 
 # def on_connect(client, userdata, flags, rc):
@@ -19,8 +20,9 @@ def create_client():#parameter to change broker
     return client
 
 client= create_client()
+file_path=get_file_path()
 #client.susbcribe('pestbusterai/image')
-with open("dog.jpg","rb") as image:
+with open(file_path,"rb") as image:
     img = image.read()
 message2=img
 base64_bytes=base64.b64encode(message2)
