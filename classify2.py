@@ -38,7 +38,7 @@ def search_for_pest():
     # Fetch image & preprocess it to match the input requirements of the model
     # file_path = "sample_pictures/10.jpg"
     #file_path = "sample_pictures/11.jpg"
-    get_file_path()
+    file_path = get_file_path()
     #random.choice(["sample_pictures/12.jpg", "sample_pictures/9.jpg"])
     #print(file_path)
 
@@ -86,7 +86,7 @@ def search_for_pest():
         #print(lbl, "=", score)
         for f in pest_list:
             if lbl.lower() in f.lower():
-                return True
+                return True, file_path
 
     top_label = labels[top_k_indices[0]]
     index_max_score=top_k_indices[0]
@@ -94,4 +94,4 @@ def search_for_pest():
     max_label=labels[index_max_score]
 
     #print(max_label,": ",max_score)
-    return False
+    return False, file_path
