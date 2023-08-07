@@ -19,12 +19,12 @@ def create_client():#parameter to change broker
 
     return client
 
-client= create_client()
-file_path=get_file_path()
+#client= create_client()
 #client.susbcribe('pestbusterai/image')
-with open(file_path,"rb") as image:
-    img = image.read()
-message2=img
-base64_bytes=base64.b64encode(message2)
-base64_message=base64_bytes.decode('ascii')
-client.publish('pestbusterai/image', payload = base64_message, qos=0, retain=False)
+def send_pic(file_path, client):
+    with open(file_path,"rb") as image:
+        img = image.read()
+    message2=img
+    base64_bytes=base64.b64encode(message2)
+    base64_message=base64_bytes.decode('ascii')
+    client.publish('pestbusterai/image', payload = base64_message, qos=0, retain=False)
