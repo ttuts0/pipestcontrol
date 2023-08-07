@@ -5,7 +5,6 @@ import random
 import time
 import classify2
 import publisher
-import subscriber
 
 pir = MotionSensor(4)#gpio4
 red = LED(16)
@@ -19,7 +18,9 @@ client = publisher.create_client()
 client.publish('pestbusterai/general', payload='connected', qos=0, retain=False)
 
 def motion_detected():#turn on red
-    is_pest = classify2.search_for_pest()
+    is_pest, image_location = classify2.search_for_pest()
+    publisher.send_pic(image_location, client)
+    print(image_location)
    
     if is_pest:
         red.on()
@@ -64,4 +65,5 @@ def detected_motion(is_pest):
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion
 
-pause()                                                                                                                                                                    
+pause()
+ 
