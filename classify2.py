@@ -3,7 +3,10 @@ import numpy as np#array operations
 from PIL import Image#mkae inputted image compatible w ML
 import time
 import random
-
+def get_file_path():
+    number = random.randint(9,20)
+    file_path ='sample_pictures/'+f'{number}.jpg'
+    return file_path
 def search_for_pest():
     model_path = "model_files/mobilenet_v1_1.0_224_quant.tflite" #img classification model
     label_path = "model_files/labels.txt"#labels of imgs in classified model
@@ -35,8 +38,7 @@ def search_for_pest():
     # Fetch image & preprocess it to match the input requirements of the model
     # file_path = "sample_pictures/10.jpg"
     #file_path = "sample_pictures/11.jpg"
-    number = random.randint(9,20)
-    file_path ='sample_pictures/'+f'{number}.jpg'
+    get_file_path()
     #random.choice(["sample_pictures/12.jpg", "sample_pictures/9.jpg"])
     #print(file_path)
 
