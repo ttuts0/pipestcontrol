@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, stream_with_context, render_template
+from flask import Flask, request, Response, stream_with_context, render_template, send_from_directory
 from datetime import datetime
 import paho.mqtt.client as mqtt
 import time
@@ -49,7 +49,11 @@ def stream_file():
     last_three_lines = get_last_three_lines(file_path)
     #motion_data = get_motion_data_from_file(file_path)
     #formatted_lines = format_lines(last_three_lines)
-    return render_template('index.html', lines=last_three_lines)
+    return render_template('index.html', motion_lines=last_three_lines)
+
+@app.route('/static/<filename>')
+def get_image(filename):
+    return send_from_directory('static', filename)
 
 @app.route('/full_log')
 def show_full_log():
