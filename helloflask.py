@@ -51,9 +51,13 @@ def stream_file():
     #formatted_lines = format_lines(last_three_lines)
     return render_template('index.html', motion_lines=last_three_lines)
 
-@app.route('/static/<filename>')
-def get_image(filename):
-    return send_from_directory('static', filename)
+@app.route('/pest_images/<filename>')
+def get_pest_image(filename):
+    return send_from_directory('pest_images', filename)
+
+@app.route('/friend_images/<filename>')
+def get_friend_image(filename):
+    return send_from_directory('friend_images', filename)
 
 @app.route('/full_log')
 def show_full_log():
