@@ -19,7 +19,7 @@ client.publish('pestbusterai/general', payload='connected', qos=0, retain=False)
 
 def motion_detected():#turn on red
     is_pest, image_location = classify2.search_for_pest()
-    publisher.send_pic(image_location, client)
+    publisher.send_pic(image_location, client, is_pest)
     print(image_location)
    
     if is_pest:
