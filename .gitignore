@@ -1,1 +1,4 @@
 venv
+# Ignore image files
+*.jpg
+*.jpeg
