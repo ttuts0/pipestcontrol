@@ -3,24 +3,68 @@
 {% block content %}
 
     <style>
-        h1{
-            padding-top: 110px;
+
+        .image-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .image {
+            margin: 200px;
+        }
+    }
+
+        h1 {
+            padding-top: 150px;
+            text-align: center;
+        }
+
+        .log-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .log {
+            text-align: center;
         }
     </style>
       
-    <h1>Pest Log</h1>
-        <ul>
-            {% for line in motion_lines %}
-            <li>{{ line.strip() }}</li>
-            {% endfor %}
-        </ul>
+    <div class="log-container">
+        <div class="log">
+            <h1>Pest Log</h1>
+            <ul>
+                {% for line in motion_lines %}
+                    {% if line.startswith('pest') %}
+                        <li>{{ line.strip() }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="full_log"> show more </a>
+        </div>
+        <div class="log">
+            <h1>Friend Log</h1>
+            <ul>
+                {% for line in motion_lines %}
+                    {% if line.startswith('friend') %}
+                        <li>{{ line.strip() }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="full_log"> show more </a>
+        </div>
+    </div>
         <a href="full_log"> show more </a>
-     
-
-        <h2>Received Pest Image:</h2>
-        <img src="{{ url_for('get_pest_image', filename='receive_img.jpg') }}" alt="Received Image">
+        <div class="image-container">
+            <div class="image">
+                <h2>Latest Pest Image:</h2>
+                <img src="{{ url_for('get_pest_image', filename='receive_img.jpg') }}" alt="Received Image">
+            </div>
         
-        <h2>Received Friend Image:</h2>
-        <img src="{{ url_for('get_friend_image', filename='receive_img.jpg') }}" alt="Received Image">
+            <div class="image">
+                <h2>Latest Friend Image:</h2>
+                <img src="{{ url_for('get_friend_image', filename='receive_img.jpg') }}" alt="Received Image">
+            </div>
+        </div>
 
-        {% endblock %}
+{% endblock %}
