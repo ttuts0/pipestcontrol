@@ -16,14 +16,14 @@ def print_msg(client, userdata, msg):#function will be called when the MQTT clie
     f.close()
 
 def get_pest_image(client, userdata, msg):
-    print('saving image')
+    print('saving pest image')
     message2 = str(msg.payload.decode('utf-8'))
     img =message2.encode('ascii')
     final_msg=base64.b64decode(img)
     open('pest_images/receive_img.jpg','wb').write(final_msg)
 
 def get_friend_image(client, userdata, msg):
-    print('saving image')
+    print('saving friend image')
     message2 = str(msg.payload.decode('utf-8'))
     img =message2.encode('ascii')
     final_msg=base64.b64decode(img)
