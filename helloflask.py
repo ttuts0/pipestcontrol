@@ -3,7 +3,7 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 import time
 from collections import defaultdict  # Import defaultdict
-
+import os
 app = Flask(__name__)#creates a flask application instance and assinges it to variable app, name is to figure out the path 
 
 def get_motion_data_from_file(file_path):

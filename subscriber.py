@@ -2,6 +2,12 @@
 import paho.mqtt.client as mqtt
 import base64 
 
+global friend_image_count
+friend_image_count = 1
+
+global pest_image_count
+pest_image_count = 1
+
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe, which need to put into on_connect
@@ -16,19 +22,28 @@ def print_msg(client, userdata, msg):#function will be called when the MQTT clie
     f.close()
 
 def get_pest_image(client, userdata, msg):
+    global pest_image_count
     print('saving pest image')
     message2 = str(msg.payload.decode('utf-8'))
     img =message2.encode('ascii')
     final_msg=base64.b64decode(img)
-    open('pest_images/receive_img.jpg','wb').write(final_msg)
+    filename = f'pest_images/pest{pest_image_count}.jpg'
+    with open(filename, 'wb') as f:
+        f.write(final_msg)
+
+    pest_image_count += 1
 
 def get_friend_image(client, userdata, msg):
+    global friend_image_count
     print('saving friend image')
     message2 = str(msg.payload.decode('utf-8'))
     img =message2.encode('ascii')
     final_msg=base64.b64decode(img)
-    open('friend_images/receive_img.jpg','wb').write(final_msg)
+    filename = f'friend_images/friend{friend_image_count}.jpg'
+    with open(filename, 'wb') as f:
+        f.write(final_msg)
 
+    friend_image_count += 1
 client = mqtt.Client()
 client.on_connect = on_connect
 #client.on_message = print_msg
