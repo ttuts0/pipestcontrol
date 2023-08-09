@@ -2,6 +2,8 @@ import paho.mqtt.client as mqtt
 import time
 import base64
 from classify2 import get_file_path
+from datetime import datetime
+
 #import TimeDetection
 
 # def on_connect(client, userdata, flags, rc):
@@ -26,7 +28,7 @@ def send_pic(file_path, client, is_pest):
         img = image.read()
     message2=img
     base64_bytes=base64.b64encode(message2)
-    base64_message=base64_bytes.decode('ascii')
+    base64_message=base64_bytes.decode('ascii')+" "+str(datetime.now())
     if is_pest:
         client.publish('pestbusterai/pest_image', payload = base64_message, qos=0, retain=False)
     else:
