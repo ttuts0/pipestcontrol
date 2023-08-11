@@ -1,4 +1,4 @@
-venv
+myenv
 # Ignore image files
 *.jpg
 *.jpeg

@@ -14,10 +14,10 @@ log = 'motionTimeLog.txt'
 
 #create client function
 client = publisher.create_client()
-#client.publish('pestbusterai/motion', payload='hello', qos=0, retain=False)
 client.publish('pestbusterai/general', payload='connected', qos=0, retain=False)
 
-def motion_detected():#turn on red
+#when motion is detected, classifies as pest or friend and send image
+def motion_detected():
     is_pest, image_location = classify2.search_for_pest()
     publisher.send_pic(image_location, client, is_pest)
     print(image_location)
@@ -35,14 +35,13 @@ def motion_detected():#turn on red
     white.off()
     return is_pest
 
-# def pest_or_friend():
-#     return random.choice([True, False])
- 
-def no_motion():#TURN OFF
+# Function to handle no motion event, turns white light on 
+def no_motion():
     red.off()
     green.off()
     white.on()
-    
+
+# Function to log motion events with timestamps   
 def motion_log(is_pest: bool):
     timestamp = datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
     file=open(log, 'a')
@@ -53,7 +52,7 @@ def motion_log(is_pest: bool):
     file.write(f'{timestamp}')
     file.close()
 
-
+# Function to publish MQTT messages about detected motion to topic motion 
 def detected_motion(is_pest):
     timestamp = datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
     if is_pest:

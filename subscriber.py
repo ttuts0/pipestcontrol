@@ -1,4 +1,3 @@
-# subscriber.py
 import paho.mqtt.client as mqtt
 import base64 
 
@@ -8,6 +7,7 @@ friend_image_count = 1
 global pest_image_count
 pest_image_count = 1
 
+#when a connection is identified client subscribes to topics motion, pest_image and friend_image
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe, which need to put into on_connect
@@ -15,12 +15,14 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("pestbusterai/pest_image")
     client.subscribe("pestbusterai/friend_image")
 
-def print_msg(client, userdata, msg):#function will be called when the MQTT client (client) receives a message on the subscribed topic.
+#function will be called when the MQTT client (client) receives a message on the subscribed topic.
+def print_msg(client, userdata, msg):
     f=open("motion_log.txt", "a")
     message = msg.payload.decode('utf-8')
     f.write(message+'\n')
     f.close()
 
+#gets the pest image in a string format and sends at what date and time detected and adds it to the pest_images folder
 def get_pest_image(client, userdata, msg):
     global pest_image_count
     print('saving pest image')
@@ -31,8 +33,7 @@ def get_pest_image(client, userdata, msg):
     with open(filename, 'wb') as f:
         f.write(final_msg)
 
-    pest_image_count += 1
-
+#gets the friend image in a string format and sends at what date and time detected and adds it to the friend_images folder
 def get_friend_image(client, userdata, msg):
     global friend_image_count
     print('saving friend image')
@@ -43,11 +44,9 @@ def get_friend_image(client, userdata, msg):
     with open(filename, 'wb') as f:
         f.write(final_msg)
 
-    friend_image_count += 1
+#creates new MQTT Client, connects to broker, subscribes to topic and delops respective function
 client = mqtt.Client()
 client.on_connect = on_connect
-#client.on_message = print_msg
-#client.on_message=print_msg2
 client.message_callback_add("pestbusterai/motion", print_msg)
 client.message_callback_add("pestbusterai/pest_image", get_pest_image)
 client.message_callback_add("pestbusterai/friend_image", get_friend_image)
