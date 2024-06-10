@@ -49,7 +49,7 @@ def motion_log(is_pest: bool):
     if is_pest:
         file.write('pest ')
     else:
-        file.write('friend ')        
+        file.write('friend ')         
     file.write(f'{timestamp}')
     file.close()
 
@@ -59,11 +59,11 @@ def detected_motion(is_pest):
     if is_pest:
         client.publish('pestbusterai/motion', payload='pest ,'+f'{timestamp}', qos=0, retain=False)
 
-    else:
+    else: 
         client.publish('pestbusterai/motion', payload='friend ,'+f'{timestamp}', qos=0, retain=False)
 
 pir.when_motion = motion_detected 
 pir.when_no_motion = no_motion
 
 pause()
- 
+  
