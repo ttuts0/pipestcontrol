@@ -28,7 +28,8 @@ def send_pic(file_path, client, is_pest):
         img = image.read()
     message2=img
     base64_bytes=base64.b64encode(message2)
-    base64_message=base64_bytes.decode('ascii')+" "+str(datetime.now())
+    base64_message=base64_bytes.decode('ascii')
+    #+" "+str(datetime.now())
     if is_pest:
         client.publish('pestbusterai/pest_image', payload = base64_message, qos=0, retain=False)
     else:
