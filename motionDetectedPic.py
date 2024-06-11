@@ -1,27 +1,31 @@
 import time
 from gpiozero import MotionSensor
-from picamera2 import Picamera2, Preview
-from time import sleep
-#from examples.lite.examples.object_detection.raspberry_pi import detect
+from picamera2 import Picamera2
+import cv2
+from Object_Detection_Files import object_ident
 
 pir = MotionSensor(4)
-picam2 = Picamera2()
-#picam2.rotation = 180
 
-#camera_config = picam2.create_still_configuration(main={"size": (1920, 1080)}, lores={"size": (640, 480)}, display="lores")
-#picam2.configure(camera_config)
-picam2.start_and_capture_file(name="first.jpg", delay=1, show_preview=True)
+picam2 = Picamera2()
 
 pic_num = 0
 while True:
     pir.wait_for_motion()
     print("Motion detected!")
 
-#     picam2.start_preview(Preview.QTGL)
-    picam2.start_and_capture_file(name=f"test{pic_num}.jpg")
+    img_name = f"test{pic_num}.jpg"
+    picam2.start()
+    picam2.capture_file(img_name)
+    print(f"Image captured: {img_name}")
+
+    img = cv2.imread(img_name)
+    img, objectInfo = object_ident.getObjects(img, 0.45, 0.2, objects = ["cat","dog"])     
+    if objectInfo:
+        print("Detected objects:")
+        for box, className in objectInfo:
+            print(f"- {className}: {box}")
+    else: 
+        print("No objects detected.")
     
-    pic_num+=1
-
-    #picam2.capture_file("test1.jpg")
-
+    pic_num += 1
 
