@@ -1,0 +1,107 @@
+<!-- templates/show_more.html -->
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    h1 {
+        padding-top: 150px;
+        text-align: center;
+    }
+
+    .log-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .log {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 90%;
+    }
+
+    table {
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        margin: 10px 0;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        width: 50%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: blue;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background-color: navy;
+    }
+</style>
+
+<div class="container log-container">
+    <h1>Full Log</h1>
+
+    <div class="search-container">
+        <form method="POST" action="{{ url_for('show_full_log') }}">
+            <input type="text" name="search_query" class="search-bar"
+                placeholder="Search by type, identification, or date (YYYY-MM-DD)" value="{{ search_query }}">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    {% for date, entries in grouped_entries.items() %}
+    <div class="log">
+        <h2>{{ date }}</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Identification</th>
+                    <th>Detection Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detection in entries %}
+                <tr>
+                    <td>{{ detection.id }}</td>
+                    <td>{{ 'Pest' if detection.critter.is_pest else 'Friend'}}</td>
+                    <td>{{ detection.critter.name }}</td>
+                    <td>{{ detection.detection_time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
