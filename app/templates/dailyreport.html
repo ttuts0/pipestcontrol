@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .report-container {
+        padding-top: 150px;
+        /* Adjust this value as needed */
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    h2 {
+        margin-top: 20px;
+    }
+
+    p {
+        margin-top: 10px;
+    }
+
+
+
+    .chart-container {
+        width: 80%;
+        margin: auto;
+    }
+</style>
+
+<div class="report-container">
+    <h1>End of Day Report for {{ date.strftime('%Y-%m-%d') }}</h1>
+
+    <h2>Summary</h2>
+    <p>Total Pest Detections: {{ total_detections }}</p>
+    <p>Number of Pests: {{ num_pests }}</p>
+    <p>Number of Friends: {{ num_friends }}</p>
+
+    <h2>Detailed Pest Activity Log</h2>
+    <p>Click <a href="{{ url_for('show_full_log', date=date.strftime('%Y-%m-%d')) }}" style="color: blue;">here</a> to
+        view the detailed pest activity log for the day.</p>
+
+    <h2>Graph of Friend Occurrences</h2>
+    <div class="chart-container">
+        <div id="friendChart"></div>
+    </div>
+
+
+</div>
+
+<!-- Load Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    // Ensure JSON data is safely handled
+    var friendCounts = JSON.parse('{{ friend_counts|tojson|safe }}');
+    var labels = Object.keys(friendCounts);
+    var data = Object.values(friendCounts);
+
+    var trace = {
+        x: labels,
+        y: data,
+        type: 'bar',
+        marker: {
+            color: 'rgba(75, 192, 192, 0.2)',
+            line: {
+                color: 'rgba(75, 192, 192, 1)',
+                width: 1
+            }
+        }
+    };
+
+    var layout = {
+
+        xaxis: {
+            title: 'Type of Friend'
+        },
+        yaxis: {
+            title: 'Number of Detections'
+        }
+    };
+
+    Plotly.newPlot('friendChart', [trace], layout);
+</script>
+
+{% endblock %}

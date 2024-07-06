@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pest Control Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>General Recommendations for Pest Control</h1>
+        {% for section in recommendations %}
+        <h2>{{ section.title }}</h2>
+        <ul>
+            {% for detail in section.details %}
+            <li>{{ detail }}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
+{% endblock %}
