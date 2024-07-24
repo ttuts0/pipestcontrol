@@ -1,4 +1,8 @@
-myenv
+venv
+
+# ignore python cached files
+*.pyc
+
 # Ignore image files
 *.jpg
 *.jpeg
