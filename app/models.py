@@ -1,22 +1,22 @@
+import os
 from datetime import datetime
-from app import db
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
+from app import db
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+#basedir = os.path.abspath(os.path.dirname(__file__))
+# # Initialize Flask app and SQLAlchemy
 # app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
-#                                        'sqlite:///' + os.path.join(basedir, 'app.db')
+#     'sqlite:///' + os.path.join(basedir, 'app.db')
 # db = SQLAlchemy(app)
 
 # Define the Critter model
-
 class Detection(db.Model):
     __tablename__ = 'detection'
     id = db.Column(db.Integer, primary_key=True)
     critter_id = db.Column(db.Integer, db.ForeignKey('critter.id'))
-    detection_time = db.Column(db.DateTime, default=datetime.utcnow)
+    detection_time = db.Column(db.DateTime, default=datetime)
     image_filename = db.Column(db.String(255))  # Ensure image_filename is defined as a column
     
     critter = db.relationship('Critter', back_populates='detections')
@@ -28,14 +28,6 @@ class Critter(db.Model):
     is_pest = db.Column(db.Boolean, default=False)
 
     detections = db.relationship('Detection', back_populates='critter')
-
-#     @classmethod
-#     def delete_by_name(cls, name):
-#         critter_to_delete = cls.query.filter_by(name=name).first()
-#         if critter_to_delete:
-#             db.session.delete(critter_to_delete)
-#             db.session.commit()
-
 
 # def initialize_database():
 #     with app.app_context():
@@ -49,9 +41,6 @@ class Critter(db.Model):
 #             Critter(name='grasshopper', is_pest=True),
 #             Critter(name='Bee', is_pest=False),
 #             Critter(name='butterfly', is_pest=False),
-
-
-
 #         ]
 
 #         # Add or update critters in the database
@@ -65,14 +54,10 @@ class Critter(db.Model):
 #         db.session.commit()
 
 #         # Print all critters in the desired format
-        
-
-#         # Example: Remove critter with name 'None'
-#         Critter.delete_by_name('cow')
-
 #         critters = Critter.query.all()
 #         for critter in critters:
 #             print(f"Critter(name='{critter.name}', is_pest={critter.is_pest})")
+
 # # Run the initialization function if script is executed directly
 # if __name__ == '__main__':
 #     initialize_database()
