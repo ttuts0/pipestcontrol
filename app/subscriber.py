@@ -23,28 +23,28 @@ def print_msg(client, userdata, msg):
     f.write(message + '\n')
     f.close()
 
-    parts = message.split(',')
-    critter_name = parts[0].strip()  # Extract critter name
-    critter_type = parts[1].strip().lower()
-    detection_time_str = parts[2].strip()
-    detection_time = datetime.strptime(detection_time_str, '%Y/%m/%d %H:%M:%S')
+    # parts = message.split(',')
+    # critter_name = parts[0].strip()  # Extract critter name
+    # critter_type = parts[1].strip().lower()
+    # detection_time_str = parts[2].strip()
+    # detection_time = datetime.strptime(detection_time_str, '%Y/%m/%d %H:%M:%S')
 
-    is_pest = True if critter_type == 'pest' else False
+    # is_pest = True if critter_type == 'pest' else False
 
-    # Create or get the Critter record and add Detection record to the database
-    with app.app_context():
-        critter = Critter.query.filter_by(name=critter_name, is_pest=is_pest).first()
-        if not critter:
-            critter = Critter(name=critter_name, is_pest=is_pest)
-            db.session.add(critter)
-            db.session.commit()
+    # # Create or get the Critter record and add Detection record to the database
+    # with app.app_context():
+    #     critter = Critter.query.filter_by(name=critter_name, is_pest=is_pest).first()
+    #     if not critter:
+    #         critter = Critter(name=critter_name, is_pest=is_pest)
+    #         db.session.add(critter)
+    #         db.session.commit()
 
-        new_detection = Detection(
-            critter_id=critter.id,
-            detection_time=detection_time
-        )
-        db.session.add(new_detection)
-        db.session.commit()
+    #     new_detection = Detection(
+    #         critter_id=critter.id,
+    #         detection_time=detection_time
+    #     )
+    #     db.session.add(new_detection)
+    #     db.session.commit()
 
 def get_pest_image(client, userdata, msg):
     global pest_image_count

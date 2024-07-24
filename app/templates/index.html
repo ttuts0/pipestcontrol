@@ -4,23 +4,103 @@
 <style>
     .image-container {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        /* Align items with space between them */
+        margin-bottom: 50px;
+        /* Add more space between image containers */
+    }
+
+    .image {
+        width: 48%;
+        /* Adjust width to fit two columns */
+    }
+
+    .image img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+        /* Adjust space between images */
     }
 
     h1 {
-        padding-top: 150px;
+        padding-top: 20px;
         text-align: center;
     }
 
     .log-container {
         display: flex;
         justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .threshold-form {
+        padding-top: 170px;
     }
 
     .log {
         text-align: center;
     }
+
+    .threshold-form {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .threshold-form input[type="number"] {
+        width: 50px;
+    }
+
+    .threshold-form button {
+        margin-left: 10px;
+    }
 </style>
+<div class="threshold-form">
+    <form method="post" action="{{ url_for('stream_file') }}">
+        <label for="threshold">Set Alert Threshold:</label>
+        <input type="number" id="threshold" name="threshold" min="1" required>
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+<div style="text-align: center;">
+    <p>Current Alert Threshold: {{ current_threshold }}</p>
+</div>
+<div class="cooldown-form" style="text-align: center;">
+    <form method="post" action="{{ url_for('stream_file') }}">
+        <label for="cooldown_grasshopper">Cooldown Time for Grasshopper (seconds):</label>
+        <input type="number" id="cooldown_grasshopper" name="cooldown_grasshopper" min="1"
+            value="{{ cooldown_times['grasshopper'] }}" required>
+        <br><br>
+
+        <label for="cooldown_snail">Cooldown Time for Snail (seconds):</label>
+        <input type="number" id="cooldown_snail" name="cooldown_snail" min="1" value="{{ cooldown_times['snail'] }}"
+            required>
+        <br><br>
+
+        <label for="cooldown_rabbit">Cooldown Time for Rabbit (seconds):</label>
+        <input type="number" id="cooldown_rabbit" name="cooldown_rabbit" min="1" value="{{ cooldown_times['rabbit'] }}"
+            required>
+        <br><br>
+
+        <label for="cooldown_ladybug">Cooldown Time for Ladybug (seconds):</label>
+        <input type="number" id="cooldown_ladybug" name="cooldown_ladybug" min="1"
+            value="{{ cooldown_times['ladybug'] }}" required>
+        <br><br>
+
+        <label for="cooldown_butterfly">Cooldown Time for Butterfly (seconds):</label>
+        <input type="number" id="cooldown_butterfly" name="cooldown_butterfly" min="1"
+            value="{{ cooldown_times['butterfly'] }}" required>
+        <br><br>
+
+        <label for="cooldown_bee">Cooldown Time for Bee (seconds):</label>
+        <input type="number" id="cooldown_bee" name="cooldown_bee" min="1" value="{{ cooldown_times['bee'] }}" required>
+        <br><br>
+
+        <button type="submit">Update Cooldown Times</button>
+    </form>
+</div>
+
 
 <div class="log-container">
     <div class="log">
@@ -52,13 +132,32 @@
 <div class="image-container">
     <div class="image">
         <h2>Latest Pest Image:</h2>
-        <img src="{{ url_for('get_pest_image', filename='receive_img.jpg') }}" alt="Received Image">
+        <div>
+            {% for image_file in recent_pest_images %}
+            <img src="{{ url_for('uploaded_file', filename=image_file) }}" alt="Recent Pest Image">
+            {% endfor %}
+        </div>
     </div>
 
     <div class="image">
         <h2>Latest Friend Image:</h2>
-        <img src="{{ url_for('get_friend_image', filename='friend1.jpg') }}" alt="Latest Friend Image">
+        <div>
+            {% for image_file in recent_friend_images %}
+            <img src="{{ url_for('uploaded_file', filename=image_file) }}" alt="Recent Friend Image">
+            {% endfor %}
+        </div>
     </div>
 </div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
 
 {% endblock %}

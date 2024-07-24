@@ -1,16 +1,14 @@
-from flask import Flask, request, Response, stream_with_context, render_template, send_from_directory
-from datetime import datetime
-import paho.mqtt.client as mqtt
-import time
-from collections import defaultdict  # Import defaultdict
-import os
-from .config import Config
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_mail import Mail
+from .config import Config
 
-app = Flask(__name__)#creates a flask application instance and assinges it to variable app, name is to figure out the path 
+app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app)
 
-from app import routes,models
+# Import routes and models after initializing Flask app and db
+from app import routes, models
