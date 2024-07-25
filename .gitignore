@@ -1,4 +1,6 @@
 venv
+.DS_Store
+app.db
 
 # ignore python cached files
 *.pyc
