@@ -31,7 +31,7 @@ def send_alert_email(detected_object, threshold):
     Sends an alert email about heightened pest activity.
     """
     sender_email = app.config['MAIL_USERNAME']
-    recipient_email = 'tammymathews03@gmail.com'  
+    recipient_email = 'FIXME@email.com'  
     subject = 'Pest Detection Alert'
     body = f"Alert: The pest '{detected_object}' has been detected more than {threshold} times in the last hour."
 
