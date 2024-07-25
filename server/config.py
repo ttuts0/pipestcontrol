@@ -14,8 +14,8 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    MAIL_USERNAME = 'tammymathews2006@gmail.com'   # Use your actual Gmail address
-    MAIL_PASSWORD = 'bpwm jtyn kjjn stqr'
+    MAIL_USERNAME = 'fixme@email.com'   # Use your actual Gmail address
+    MAIL_PASSWORD = 'password123'
 
     # Session settings
     SESSION_TYPE = 'filesystem'  # Use filesystem to store session data
