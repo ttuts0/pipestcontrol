@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .report-container {
+        padding-top: 150px;
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 2.5em;
+    }
+
+    h2 {
+        margin-top: 20px;
+        font-size: 2em;
+    }
+
+    p {
+        margin-top: 10px;
+        font-size: 1.5em;
+    }
+
+    .chart-container {
+        width: 80%;
+        margin: auto;
+    }
+
+    .navigation-links {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .navigation-links a {
+        margin: 0 20px;
+        font-size: 22px;
+        font-weight: bold;
+        text-decoration: none;
+        color: black;
+    }
+
+    .navigation-links a:hover {
+        text-decoration: underline;
+        background: none;
+    }
+</style>
+<div class="report-container">
+    <h1>Trends for the Last 7 Days</h1>
+
+    <h2>Graph of Critter Detections Over the Last 7 Days</h2>
+    <div class="chart-container">
+        <div id="barChart"></div>
+    </div>
+
+    <h2>Detailed Critter Activity</h2>
+    <div class="chart-container">
+        <div>
+            <label for="daySelector">Select Day:</label>
+            <select id="daySelector">
+                {% for date in dates %}
+                <option value="{{ date }}">{{ date }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="critterSelector">Select Critter:</label>
+            <select id="critterSelector">
+                {% for critter in critters %}
+                <option value="{{ critter }}">{{ critter }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div id="lineChart"></div>
+    </div>
+
+</div>
+
+<!-- Load Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    // Parse data from server
+    var dateCritterData = {{ date_critter_data | tojson | safe }};
+    var critters = {{ critters | tojson | safe }};
+    var dates = {{ dates | tojson | safe }};
+
+    console.log('dateCritterData:', dateCritterData); // Debugging line
+    console.log('critters:', critters); // Debugging line
+    console.log('dates:', dates); // Debugging line
+
+    // Initialize the bar chart with data for the last 7 days
+    function initializeBarChart() {
+        var data = critters.map(critter => ({
+            x: dates,
+            y: dates.map(date => dateCritterData[date] ? (dateCritterData[date][critter] ? dateCritterData[date][critter].length : 0) : 0),
+            type: 'bar',
+            name: critter
+        }));
+
+        var layout = {
+            barmode: 'stack',
+            xaxis: {
+                title: 'Date'
+            },
+            yaxis: {
+                title: 'Number of Detections'
+            }
+        };
+
+        Plotly.newPlot('barChart', data, layout);
+    }
+
+    initializeBarChart();
+
+    // Function to aggregate detections by hour
+    function aggregateByHour(detections) {
+        var hourlyCounts = Array(24).fill(0);
+
+        detections.forEach(detection => {
+            var hour = new Date(detection.time).getHours();
+            hourlyCounts[hour]++;
+        });
+
+        return hourlyCounts.map((count, index) => ({
+            time: (index < 10 ? '0' : '') + index + ':00',
+            count: count
+        }));
+    }
+
+    function filterDataByDayAndCritter(day, critter) {
+        var detections = dateCritterData[day] && dateCritterData[day][critter] ? dateCritterData[day][critter] : [];
+        return aggregateByHour(detections);
+    }
+    function updateLineChart(day, critter) {
+        var filteredData = filterDataByDayAndCritter(day, critter);
+
+        var lineData = {
+            x: filteredData.map(entry => entry.time),
+            y: filteredData.map(entry => entry.count),
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: critter
+        };
+
+        var layout = {
+            xaxis: {
+                title: 'Hour',
+                tickformat: '%H:%M', // Display hour and minute
+                dtick: 3600000, // 1 hour in milliseconds
+                tickmode: 'array',
+                tickvals: Array.from({ length: 24 }, (_, i) => i * 3600000), // Array of hourly ticks
+                ticktext: Array.from({ length: 24 }, (_, i) => (i < 10 ? '0' : '') + i + ':00') // Hourly labels
+            },
+            yaxis: {
+                title: 'Number of Detections'
+            },
+            title: 'Detection Trend for ' + critter + ' on ' + day
+        };
+
+        Plotly.newPlot('lineChart', [lineData], layout);
+    }
+
+    // Event listener for critter dropdown change
+    document.getElementById('critterSelector').addEventListener('change', function () {
+        var critter = this.value;
+        var day = document.getElementById('daySelector').value;
+        updateLineChart(day, critter);
+    });
+
+    document.getElementById('daySelector').addEventListener('change', function () {
+        var day = this.value;
+        var critter = document.getElementById('critterSelector').value;
+        updateLineChart(day, critter);
+    });
+
+    // Initial update with the default selected values
+    var defaultDay = document.getElementById('daySelector').value;
+    var defaultCritter = document.getElementById('critterSelector').value;
+    updateLineChart(defaultDay, defaultCritter);
+
+</script>
+{% endblock %}

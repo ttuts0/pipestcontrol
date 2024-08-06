@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .threshold-form {
+        padding-top: 170px;
+    }
+
+
+    .threshold-form {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .threshold-form input[type="number"] {
+        width: 50px;
+    }
+
+    .threshold-form button {
+        margin-left: 10px;
+    }
+
+    .threshold-form,
+    .cooldown-form {
+        font-size: 20px;
+        /* Adjust this value as needed */
+    }
+
+    /* Increases the font size of labels and input fields */
+    .threshold-form label,
+    .cooldown-form label {
+        font-size: 22px;
+        /* Slightly larger font size for labels */
+    }
+
+    .threshold-form input[type="number"],
+    .cooldown-form input[type="number"] {
+        font-size: 20px;
+        /* Adjust font size for input fields */
+        width: 80px;
+        /* Increase width if needed */
+    }
+
+    .threshold-form button,
+    .cooldown-form button {
+        font-size: 15px;
+        /* Adjust button font size */
+        padding: 10px 10px;
+        /* Adjust padding if needed */
+    }
+
+    /* Styles for alert messages */
+    .alert {
+        font-size: 20px;
+        /* Adjust font size for alert messages */
+        margin: 10px 0;
+        /* Space between alert messages */
+    }
+</style>
+
+<div class="threshold-form">
+    <form method="post" action="{{ url_for('settings') }}">
+        <label for="threshold">Set Alert Threshold:</label>
+        <input type="number" id="threshold" name="threshold" min="1" required>
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+<div style="text-align: center;">
+    <p style="font-size: 20px;">Current Alert Threshold: {{ current_threshold }}</p>
+
+</div>
+<div class="cooldown-form" style="text-align: center;">
+    <form method="post" action="{{ url_for('settings') }}">
+        <label for="cooldown_grasshopper">Cooldown Time for Grasshopper (seconds):</label>
+        <input type="number" id="cooldown_grasshopper" name="cooldown_grasshopper" min="1"
+            value="{{ cooldown_times['grasshopper'] }}" required>
+        <br><br>
+
+        <label for="cooldown_snail">Cooldown Time for Snail (seconds):</label>
+        <input type="number" id="cooldown_snail" name="cooldown_snail" min="1" value="{{ cooldown_times['snail'] }}"
+            required>
+        <br><br>
+
+        <label for="cooldown_rabbits">Cooldown Time for Rabbit (seconds):</label>
+        <input type="number" id="cooldown_rabbit" name="cooldown_rabbits" min="1"
+            value="{{ cooldown_times['rabbits'] }}" required>
+        <br><br>
+
+        <label for="cooldown_ladybug">Cooldown Time for Ladybug (seconds):</label>
+        <input type="number" id="cooldown_ladybug" name="cooldown_ladybug" min="1"
+            value="{{ cooldown_times['ladybug'] }}" required>
+        <br><br>
+
+        <label for="cooldown_butterfly">Cooldown Time for Butterfly (seconds):</label>
+        <input type="number" id="cooldown_butterfly" name="cooldown_butterfly" min="1"
+            value="{{ cooldown_times['butterfly'] }}" required>
+        <br><br>
+
+        <label for="cooldown_bee">Cooldown Time for Bee (seconds):</label>
+        <input type="number" id="cooldown_bee" name="cooldown_bee" min="1" value="{{ cooldown_times['bee'] }}" required>
+        <br><br>
+
+        <button type="submit">Update Cooldown Times</button>
+    </form>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% endblock %}

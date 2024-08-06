@@ -8,13 +8,16 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     <style>
+        /* Header Styles */
         #main_header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background-color: #2c3e50;
-            padding: 10px;
+            padding: 20px;
+            padding-bottom: 30px;
+            /* Add bottom padding for extra space */
             z-index: 100;
             text-align: center;
             font-family: 'Arial', sans-serif;
@@ -23,33 +26,44 @@
             color: #ffffff;
         }
 
+        /* Navigation Styles */
         nav {
             font-size: 25px;
-            padding-top: 45px;
+            padding: 10px 0;
             position: fixed;
             width: 100%;
             background-color: #34495e;
+            top: 90px;
+            /* Adjust this value to create more space below the header */
             left: 0;
+            z-index: 100;
         }
 
         nav ul {
             display: flex;
             justify-content: center;
-
+            margin: 0;
+            padding: 0;
+            list-style: none;
         }
 
-        a {
-            width: 33.33%;
+        nav a {
+            width: 16.66%;
+            /* Adjust width if you have more or fewer links */
             text-align: center;
             padding: 10px 0;
             color: #ffffff;
             text-decoration: none;
             transition: background-color 0.3s;
+            display: block;
         }
 
-        a:hover {
+        nav a:hover {
             background-color: #2c3e50;
         }
+
+
+        /* Sum of #main_header and nav height to prevent overlap */
     </style>
 </head>
 
@@ -61,9 +75,10 @@
         <ul>
             <a href="/">Home</a></li>
             <a href="/full_log">Full Log</a></li>
-            <a href="/stats">Statistics</a></li>
             <a href="/recommendations">Recommendations</a>
-            <a href="/daily_report/2024-07-08">Pest Report</a>
+            <a href="{{ url_for('daily_report', date=previous_day) }}">Pest Report</a>
+            <a href="/settings">Settings</a>
+            <a href="/trends">Trends</a>
         </ul>
     </nav>
     <main>

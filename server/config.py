@@ -6,7 +6,7 @@ class Config:
     # database URI (Uniform Resource Identifier) is a string that uniquely identifies a database connection
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
-    UPLOAD_FOLDER = os.path.join(basedir, 'detected_pics')
+    UPLOAD_FOLDER = os.path.join(basedir, 'app', 'detected_pics')
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'a_default_secret_key'
     
     # Email settings

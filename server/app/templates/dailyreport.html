@@ -3,26 +3,45 @@
 <style>
     .report-container {
         padding-top: 150px;
-        /* Adjust this value as needed */
+        text-align: center;
     }
 
     h1 {
-        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2.5em;
     }
 
     h2 {
         margin-top: 20px;
+        font-size: 2em;
     }
 
     p {
         margin-top: 10px;
+        font-size: 1.5em;
     }
-
-
 
     .chart-container {
         width: 80%;
         margin: auto;
+    }
+
+    .navigation-links {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .navigation-links a {
+        margin: 0 20px;
+        font-size: 22px;
+        font-weight: bold;
+        text-decoration: none;
+        color: black;
+    }
+
+    .navigation-links a:hover {
+        text-decoration: underline;
+        background: none;
     }
 </style>
 
@@ -43,13 +62,17 @@
         <div id="friendChart"></div>
     </div>
 
-
+    <div class="navigation-links">
+        <a href="{{ url_for('daily_report', date=previous_date) }}">&larr; Previous Day</a>
+        {% if show_next_day_link %}
+        <a href="{{ url_for('daily_report', date=next_date) }}">Next Day &rarr;</a>
+        {% endif %}
+    </div>
 </div>
 
 <!-- Load Plotly.js -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-    // Ensure JSON data is safely handled
     var friendCounts = JSON.parse('{{ friend_counts|tojson|safe }}');
     var labels = Object.keys(friendCounts);
     var data = Object.values(friendCounts);
@@ -68,7 +91,6 @@
     };
 
     var layout = {
-
         xaxis: {
             title: 'Type of Friend'
         },
@@ -79,5 +101,4 @@
 
     Plotly.newPlot('friendChart', [trace], layout);
 </script>
-
 {% endblock %}

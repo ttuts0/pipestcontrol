@@ -29,6 +29,15 @@ class Critter(db.Model):
 
     detections = db.relationship('Detection', back_populates='critter')
 
+class Configure(db.Model):
+    __tablename__ = 'configure'
+    id = db.Column(db.Integer, primary_key=True)
+    critter_name = db.Column(db.String(50), unique=True, nullable=False)
+    cooldown_time = db.Column(db.Integer, default=60, nullable=False)  # Default to 60 seconds
+
+    def __repr__(self):
+        return f"<Configure(critter_name='{self.critter_name}', cooldown_time={self.cooldown_time})>"
+
 # def initialize_database():
 #     with app.app_context():
 #         db.create_all()

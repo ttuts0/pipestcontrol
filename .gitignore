@@ -2,6 +2,8 @@ venv
 .DS_Store
 app.db
 flask_session
+myenv
+venv
 
 # ignore python cached files
 *.pyc
